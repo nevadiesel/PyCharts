@@ -291,6 +291,7 @@
     <file>Nova_Flat/NovaFlat-Regular.ttf</file>
   </qresource>
   <qresource prefix="images">
+    <file>images/girl.jpg</file>
     <file>images/m00_1.svg</file>
     <file>images/m03_1.svg</file>
     <file>images/m14.svg</file>
