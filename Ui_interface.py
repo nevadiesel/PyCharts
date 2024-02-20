@@ -120,7 +120,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_7.setContentsMargins(3, 3, 3, 3)
         self.verticalLayout_7.setSpacing(3)
         self.verticalLayout_7.setObjectName("verticalLayout_7")
-        self.graphicsView = PlotWidget(self.frame_8)
+        self.graphicsView = PlotWidget(self.frame_8, background = "#31394D" )
         self.graphicsView.setObjectName("graphicsView")
         self.verticalLayout_7.addWidget(self.graphicsView)
         self.verticalLayout_4.addWidget(self.frame_8)
