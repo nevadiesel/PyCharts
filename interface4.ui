@@ -124,13 +124,101 @@ background-color: rgba(33, 43, 51, 100);
           </property>
           <item>
            <widget class="QFrame" name="frame_11">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="frameShape">
              <enum>QFrame::StyledPanel</enum>
             </property>
             <property name="frameShadow">
              <enum>QFrame::Raised</enum>
             </property>
-            <layout class="QVBoxLayout" name="verticalLayout_5">
+            <layout class="QHBoxLayout" name="horizontalLayout_5">
+             <property name="spacing">
+              <number>3</number>
+             </property>
+             <property name="leftMargin">
+              <number>3</number>
+             </property>
+             <property name="topMargin">
+              <number>3</number>
+             </property>
+             <property name="rightMargin">
+              <number>3</number>
+             </property>
+             <property name="bottomMargin">
+              <number>3</number>
+             </property>
+             <item>
+              <widget class="QPushButton" name="pushButton_6">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+	color: rgba(49, 57, 77);
+     background-color:rgba(49, 57, 77);
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:10px;
+width: 15;
+height: 15;
+}
+QPushButton:hover{
+background-color:rgba(49, 57, 77);
+}
+QPushButton:pressed{
+background-color:rgba(255,255,255,70);
+}</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="pushButton_7">
+               <property name="minimumSize">
+                <size>
+                 <width>50</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>50</width>
+                 <height>30</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton{
+	color: rgb(255, 255, 255);
+     background-color:rgba(255,255,255,200);
+     border: 1px solid rgba(255,255,255,40);
+     border-radius:10px;
+width: 15;
+height: 15;
+}
+QPushButton:hover{
+background-color:rgba(255,255,255,200);
+}
+QPushButton:pressed{
+background-color:rgba(255,255,255,70);
+}</string>
+               </property>
+               <property name="text">
+                <string/>
+               </property>
+              </widget>
+             </item>
              <item>
               <widget class="QLabel" name="label_7">
                <property name="font">
@@ -1112,7 +1200,6 @@ background-color:rgba(255,255,255,70);
  </customwidgets>
  <resources>
   <include location="resources.qrc"/>
-  <include location="C:/Users/IvanBarchenkov/Downloads/charts_simple/resources.qrc"/>
  </resources>
  <connections/>
 </ui>

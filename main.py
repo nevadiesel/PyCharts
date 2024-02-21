@@ -3,6 +3,7 @@ import sys
 import pandas as pd
 import Ui_interface
 import numpy as np
+import sympy as sp
 import pyqtgraph as pg
 from PyQt5 import QtWidgets
 from PyQt5 import QtCore, QtWidgets
@@ -22,9 +23,17 @@ class MainApplication(QtWidgets.QMainWindow, Ui_interface.Ui_MainWindow):
         self.color = 'r'
         self.marker = 'o'
         self.line_style = QtCore.Qt.SolidLine
+        self.graphicsView.setBackground('#31394D')
+        self.graphicsView.showGrid(x=True, y=True, alpha = 1)
+        self.graphicsView.addLegend()
+
+        self.pushButton_6.clicked.connect(lambda: self.background_color_b())
+        self.pushButton_7.clicked.connect(lambda: self.background_color_w())
+
         
         self.pushButton.clicked.connect(lambda: self.draw())
         self.pushButton_3.clicked.connect(lambda: self.clear())
+        self.pushButton_4.clicked.connect(lambda: self.clear_all())
         self.pushButton_2.clicked.connect(lambda: self.open_xlsx())
 
         self.select_color_blue.clicked.connect(lambda: self.set_blue())
@@ -41,6 +50,12 @@ class MainApplication(QtWidgets.QMainWindow, Ui_interface.Ui_MainWindow):
         self.select_marker_point_5.clicked.connect(lambda: self.set_DashLine())
         self.select_marker_point_3.clicked.connect(lambda: self.set_DotLine())
         self.select_marker_point_4.clicked.connect(lambda: self.set_DashDotLine())
+
+    def background_color_b(self):
+        self.graphicsView.setBackground('#31394D')
+
+    def background_color_w(self):
+        self.graphicsView.setBackground('w')
 
 
     def set_blue(self):
@@ -83,24 +98,26 @@ class MainApplication(QtWidgets.QMainWindow, Ui_interface.Ui_MainWindow):
             x = np.linspace(int(self.lineEdit.text()), int(self.lineEdit_2.text()), 500)
             self.symbolSize = 0.1
             try:
-                func = lambda x: eval(self.select_funtion.text())
+                # func = lambda x: eval(self.select_funtion.text())
+                func = sp.lambdify(sp.Symbol('x'), self.select_funtion.text())
                 y = func(x)
             except:
                 pass
-            self.graphicsView.plot(x, y, pen = pg.mkPen(self.color, width=2, style=self.line_style), name='test')
+            self.plot_item_func = self.graphicsView.plot(x, y, pen = pg.mkPen(self.color, width=2, style=self.line_style), name='test')
         else:
             x = self.table.values[:, 0]
             y = self.table.values[:, 1]
             self.symbolSize = 15
-            self.graphicsView.plot(x, y, pen = pg.mkPen(
+            self.plot_item_xlsx = self.graphicsView.plot(x, y, pen = pg.mkPen(
                 self.color, width=2, style=self.line_style), symbol=self.marker, symbolBrush='black', symbolSize=self.symbolSize, name='xlsx')
-
-        self.graphicsView.showGrid(x=True, y=True)
-        self.graphicsView.addLegend()
-
+        print(self.plot_item_func)
+        print(self.plot_item_xlsx)
 
     def clear(self):
         self.graphicsView.clear()
+    
+    def clear_all(self):
+        self.graphicsView.removeItem(self.plot_item_xlsx)
 
 
 def main():
