@@ -22,15 +22,17 @@ class MainApplication(QtWidgets.QMainWindow, Ui_interface.Ui_MainWindow):
         self.table = None
         self.color = 'r'
         self.marker = 'o'
+        self.lst_item_func = []
+        self.lst_item_xlsx = []
         self.line_style = QtCore.Qt.SolidLine
         self.graphicsView.setBackground('#31394D')
         self.graphicsView.showGrid(x=True, y=True, alpha = 1)
         self.graphicsView.addLegend()
 
+
         self.pushButton_6.clicked.connect(lambda: self.background_color_b())
         self.pushButton_7.clicked.connect(lambda: self.background_color_w())
 
-        
         self.pushButton.clicked.connect(lambda: self.draw())
         self.pushButton_3.clicked.connect(lambda: self.clear())
         self.pushButton_4.clicked.connect(lambda: self.clear_all())
@@ -51,9 +53,9 @@ class MainApplication(QtWidgets.QMainWindow, Ui_interface.Ui_MainWindow):
         self.select_marker_point_3.clicked.connect(lambda: self.set_DotLine())
         self.select_marker_point_4.clicked.connect(lambda: self.set_DashDotLine())
 
+    
     def background_color_b(self):
         self.graphicsView.setBackground('#31394D')
-
     def background_color_w(self):
         self.graphicsView.setBackground('w')
 
@@ -104,20 +106,34 @@ class MainApplication(QtWidgets.QMainWindow, Ui_interface.Ui_MainWindow):
             except:
                 pass
             self.plot_item_func = self.graphicsView.plot(x, y, pen = pg.mkPen(self.color, width=2, style=self.line_style), name='test')
+            if self.plot_item_func not in self.lst_item_func:
+                self.lst_item_func.append(self.plot_item_func)
+            # self.lst_item_func =  self.lst_item_func + [self.plot_item_func]
         else:
             x = self.table.values[:, 0]
             y = self.table.values[:, 1]
             self.symbolSize = 15
             self.plot_item_xlsx = self.graphicsView.plot(x, y, pen = pg.mkPen(
                 self.color, width=2, style=self.line_style), symbol=self.marker, symbolBrush='black', symbolSize=self.symbolSize, name='xlsx')
-        print(self.plot_item_func)
-        print(self.plot_item_xlsx)
+            if self.plot_item_xlsx not in self.lst_item_xlsx:
+                self.lst_item_xlsx.append(self.plot_item_xlsx)
+            # self.lst_item_xlsx =  self.lst_item_xlsx + [self.plot_item_xlsx]
+                
+        try:
+            print(self.lst_item_func)
+            print(self.lst_item_xlsx)
+            print('________________')
+        except:
+            pass
 
     def clear(self):
-        self.graphicsView.clear()
+        self.graphicsView.removeItem(self.lst_item_xlsx[0])
+        self.lst_item_xlsx.pop(0)
     
     def clear_all(self):
-        self.graphicsView.removeItem(self.plot_item_xlsx)
+        self.graphicsView.clear()
+        self.lst_item_func.clear()
+        self.lst_item_xlsx.clear()
 
 
 def main():
