@@ -183,8 +183,8 @@ class Ui_MainWindow(object):
         self.verticalLayout_6.setContentsMargins(3, 3, 3, 9)
         self.verticalLayout_6.setSpacing(3)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
-        self.tableWidget = QtWidgets.QTableWidget(self.frame_13)
-        self.tableWidget.setStyleSheet("QTableView {\n"
+        self.tableView = QtWidgets.QTableView(self.frame_13)
+        self.tableView.setStyleSheet("QTableView {\n"
 "background-color: rgba(255, 255, 255, 30); \n"
 "border: 1px solid rgba(255,255,255,40);\n"
 "border-bottom-right-radius: 7px; \n"
@@ -213,10 +213,8 @@ class Ui_MainWindow(object):
 "    background-color: rgba(255, 255, 255, 50);\n"
 "}\n"
 "")
-        self.tableWidget.setObjectName("tableWidget")
-        self.tableWidget.setColumnCount(0)
-        self.tableWidget.setRowCount(0)
-        self.verticalLayout_6.addWidget(self.tableWidget)
+        self.tableView.setObjectName("tableView")
+        self.verticalLayout_6.addWidget(self.tableView)
         self.horizontalLayout_6.addWidget(self.frame_13)
         self.verticalLayout_4.addWidget(self.footer_frame, 0, QtCore.Qt.AlignBottom)
         self.horizontalLayout.addWidget(self.frame_2)
