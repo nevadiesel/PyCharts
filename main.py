@@ -5,7 +5,7 @@ from Ui_interface import Ui_MainWindow
 import numpy as np
 import sympy as sp
 import pyqtgraph as pg
-from PyQt5 import QtWidgets, QtCore, QtWidgets, QtSql
+from PyQt5 import QtWidgets, QtCore, QtWidgets, QtSql, QtGui
 from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtSql import QSqlTableModel
@@ -20,10 +20,9 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
         self.setWindowTitle("PyCharts ")
         self.setWindowIcon(QIcon('pie-chart.ico'))
         self.table = None
-        self.color = 'red'
+        self.color = 'blue'
         self.marker = 'o'
         self.lst_item_func = []
-        self.lst_item_xlsx = []
         self.line_style = QtCore.Qt.SolidLine
         self.graphicsView.setBackground('#31394D')
         self.graphicsView.showGrid(x=True, y=True, alpha=1)
@@ -41,6 +40,7 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
         self.pushButton_3.clicked.connect(self.delete_chart)
         self.pushButton_4.clicked.connect(self.clear_all)
         self.pushButton_2.clicked.connect(self.open_xlsx)
+        self.open_close_side_bar_btn.clicked.connect(self.slideMenu)
 
         # Установка цвета
         self.select_color_blue.clicked.connect(lambda: self.set_color('blue'))
@@ -69,6 +69,21 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
         self.select_marker_point_4.clicked.connect(
             lambda: self.set_line_style(QtCore.Qt.DashDotLine))
 
+    def slideMenu(self):
+        width = self.right_menu_widget.width()
+
+        if width == 0:
+            newWidth = 250
+        else:
+            newWidth = 0
+
+        self.animation = QtCore.QPropertyAnimation(self.right_menu_widget, b"maximumWidth")
+        self.animation.setDuration(250)
+        self.animation.setStartValue(width)
+        self.animation.setEndValue(newWidth)
+        self.animation.setEasingCurve(QtCore.QEasingCurve.InOutQuart)
+        self.animation.start()
+
     def set_background_color(self, color):
         self.graphicsView.setBackground(color)
 
@@ -93,12 +108,15 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
         self.model.setTable('charts')
         self.model.select()
         self.tableView.setModel(self.model)
-        self.tableView.setColumnWidth(0, 60)
-        self.tableView.setColumnWidth(1, 150)
-        self.tableView.setColumnWidth(2, 70)
-        self.tableView.setColumnWidth(3, 70)
-        self.tableView.setColumnWidth(4, 160)
-        self.tableView.setColumnWidth(5, 96)
+        self.tableView.setColumnWidth(0, 80)
+        self.tableView.setColumnWidth(1, 200)
+        self.tableView.setColumnWidth(2, 120)
+        self.tableView.setColumnWidth(3, 120)
+        self.tableView.setColumnWidth(4, 140)
+        self.tableView.setColumnWidth(5, 90)
+        # self.tableView.setTextAlignment(QtCore.Qt.AlignCenter)
+        # item = QTableVievItem(Func) # create the item
+        # item.setTextAlignment(Qt.AlignHCenter)
 
     def add_new_transaction(self):
         function_text = self.select_funtion.text() if self.select_funtion.text() else 'xlsx'
@@ -158,7 +176,7 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
         function_text = self.select_funtion.text()
         if function_text:
             x = np.linspace(int(self.lineEdit.text()),
-                            int(self.lineEdit_2.text()), 500)
+                            int(self.lineEdit_2.text()), 1000)
             self.symbolSize = 0.1
             try:
                 func = sp.lambdify(sp.Symbol('x'), function_text)
@@ -182,7 +200,6 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
 
         try:
             print(self.lst_item_func)
-            print(self.lst_item_xlsx)
             print('________________')
         except:
             pass
@@ -191,7 +208,6 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
     def clear_all(self):
         self.graphicsView.clear()
         self.lst_item_func.clear()
-        self.lst_item_xlsx.clear()
 
     def before_close(self):
         query = QtSql.QSqlQuery()
@@ -200,7 +216,6 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow):
         print("Данные удалены.")
 
     def closeEvent(self, event):
-        # Вызов функции перед закрытием
         self.before_close()
         event.accept()  # Если вы хотите, чтобы окно закрывалось без дополнительных запросов
         # или используйте event.ignore(), если есть условия, при которых закрытие не должно происходить

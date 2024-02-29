@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '/home/ivan/Documents/GitHub/PyCharts/interface4.ui'
+# Form implementation generated from reading ui file '/home/ivan/Documents/GitHub/PyCharts/interface.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.6
 #
@@ -16,7 +16,8 @@ import resources_rc
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(886, 617)
+        MainWindow.resize(1024, 800)
+        MainWindow.setMinimumSize(QtCore.QSize(1024, 800))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setStyleSheet("@font-face {\n"
 "    font-family: NovaFlat;\n"
@@ -219,7 +220,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_4.addWidget(self.footer_frame, 0, QtCore.Qt.AlignBottom)
         self.horizontalLayout.addWidget(self.frame_2)
         self.right_menu_widget = QtWidgets.QWidget(self.centralwidget)
-        self.right_menu_widget.setMinimumSize(QtCore.QSize(240, 0))
+        self.right_menu_widget.setMinimumSize(QtCore.QSize(0, 0))
         self.right_menu_widget.setMaximumSize(QtCore.QSize(240, 1000000))
         self.right_menu_widget.setObjectName("right_menu_widget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.right_menu_widget)
@@ -269,18 +270,30 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.frame = QtWidgets.QFrame(self.frame_4)
-        self.frame.setMaximumSize(QtCore.QSize(1000, 1000))
-        self.frame.setStyleSheet("QPushButton:pressed{\n"
+        self.frame.setMaximumSize(QtCore.QSize(1000, 50))
+        self.frame.setStyleSheet("QPushButton{\n"
+"    color: rgb(255, 255, 255);\n"
+"     background-color:rgba(255,255,255,30);\n"
+"     border: 1px solid rgba(255,255,255,40);\n"
+"     border-radius:10px;\n"
+"height: 30;\n"
+"}\n"
+"QPushButton:hover{\n"
+"background-color:rgba(255,255,255,30);\n"
+"}\n"
+"QPushButton:pressed{\n"
 "background-color:rgba(255,255,255,70);\n"
-"}")
+"}\n"
+"")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame)
-        self.verticalLayout_3.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_3.setContentsMargins(6, 9, 6, 0)
         self.verticalLayout_3.setSpacing(0)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.pushButton_2 = QtWidgets.QPushButton(self.frame)
+        self.pushButton_2.setStyleSheet("")
         icon1 = QtGui.QIcon()
         icon1.addPixmap(QtGui.QPixmap(":/icons/icons/upload.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.pushButton_2.setIcon(icon1)
@@ -295,6 +308,8 @@ class Ui_MainWindow(object):
         self.pushButton_5.setIconSize(QtCore.QSize(200, 200))
         self.pushButton_5.setObjectName("pushButton_5")
         self.verticalLayout_2.addWidget(self.pushButton_5)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout_2.addItem(spacerItem)
         self.groupBox = QtWidgets.QGroupBox(self.frame_4)
         self.groupBox.setMinimumSize(QtCore.QSize(0, 0))
         self.groupBox.setMaximumSize(QtCore.QSize(1000, 1000))
@@ -530,3 +545,4 @@ class Ui_MainWindow(object):
         self.pushButton_3.setText(_translate("MainWindow", "Стререть"))
         self.pushButton_4.setText(_translate("MainWindow", "Стереть все"))
         self.pushButton.setText(_translate("MainWindow", "Построить"))
+
