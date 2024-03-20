@@ -22,12 +22,12 @@ class Ui_MainWindow(object):
 "    src: url(:/fonts/Nova_Flat/NovaFlat-Regular.ttf) format(\"truetype\");\n"
 "}\n"
 "*{\n"
-"\n"
+"color: #fff;\n"
+"font-family: NovaFlat;\n"
 "font-size: 12px;\n"
 "border: nine;\n"
 "background: none;\n"
 "}\n"
-"\n"
 "#centralwidget{\n"
 "background-color: rgb(33, 43, 51);\n"
 "}\n"
@@ -147,9 +147,9 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addWidget(self.saveButton)
         self.label_7 = QtWidgets.QLabel(self.frame_11)
         font = QtGui.QFont()
+        font.setFamily("NovaFlat")
         font.setPointSize(1)
         self.label_7.setFont(font)
-        self.label_7.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_7.setAlignment(QtCore.Qt.AlignCenter)
         self.label_7.setObjectName("label_7")
         self.horizontalLayout_5.addWidget(self.label_7)
@@ -164,10 +164,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.setSpacing(2)
         self.horizontalLayout_4.setObjectName("horizontalLayout_4")
         self.label_6 = QtWidgets.QLabel(self.frame_10)
-        font = QtGui.QFont()
-        font.setPointSize(1)
-        self.label_6.setFont(font)
-        self.label_6.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_6.setObjectName("label_6")
         self.horizontalLayout_4.addWidget(self.label_6)
         self.open_close_side_bar_btn = QtWidgets.QPushButton(self.frame_10)
@@ -269,13 +265,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addWidget(self.label_14)
         self.label = QtWidgets.QLabel(self.frame_3)
         font = QtGui.QFont()
+        font.setFamily("NovaFlat")
         font.setPointSize(12)
         font.setBold(True)
         font.setWeight(99)
         self.label.setFont(font)
         self.label.setMouseTracking(False)
-        self.label.setStyleSheet("*{font-size:12pt; font-weight: 1000;color: rgb(255, 255, 255);}\n"
-"")
+        self.label.setStyleSheet("*{font-size:12pt; font-weight: 1000;}")
         self.label.setWordWrap(False)
         self.label.setObjectName("label")
         self.horizontalLayout_2.addWidget(self.label)
@@ -455,11 +451,6 @@ class Ui_MainWindow(object):
         self.gridLayout.addWidget(self.lineEdit_2, 1, 1, 1, 1)
         self.label_4 = QtWidgets.QLabel(self.groupBox)
         self.label_4.setMaximumSize(QtCore.QSize(42, 25))
-        font = QtGui.QFont()
-        font.setFamily("MS Shell Dlg 2")
-        font.setPointSize(10)
-        self.label_4.setFont(font)
-        self.label_4.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_4.setObjectName("label_4")
         self.gridLayout.addWidget(self.label_4, 0, 0, 1, 1)
         self.select_function = QtWidgets.QLineEdit(self.groupBox)
@@ -470,9 +461,9 @@ class Ui_MainWindow(object):
         self.label_2 = QtWidgets.QLabel(self.groupBox)
         self.label_2.setMaximumSize(QtCore.QSize(40, 16777215))
         font = QtGui.QFont()
+        font.setFamily("NovaFlat")
         font.setPointSize(10)
         self.label_2.setFont(font)
-        self.label_2.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_2.setObjectName("label_2")
         self.gridLayout.addWidget(self.label_2, 1, 0, 1, 1)
         self.lineEdit = QtWidgets.QLineEdit(self.groupBox)
@@ -492,10 +483,9 @@ class Ui_MainWindow(object):
         self.label_3 = QtWidgets.QLabel(self.groupBox)
         self.label_3.setMaximumSize(QtCore.QSize(40, 16777215))
         font = QtGui.QFont()
-        font.setFamily("MS Shell Dlg 2")
+        font.setFamily("NovaFlat")
         font.setPointSize(10)
         self.label_3.setFont(font)
-        self.label_3.setStyleSheet("color: rgb(255, 255, 255);")
         self.label_3.setObjectName("label_3")
         self.gridLayout.addWidget(self.label_3, 1, 2, 1, 1)
         self.select_marker_point_3 = QtWidgets.QPushButton(self.groupBox)

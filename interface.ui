@@ -26,12 +26,12 @@
     src: url(:/fonts/Nova_Flat/NovaFlat-Regular.ttf) format(&quot;truetype&quot;);
 }
 *{
-color: #fff;
-font-family: NovaFlat;
+
 font-size: 12px;
 border: nine;
 background: none;
 }
+
 #centralwidget{
 background-color: rgb(33, 43, 51);
 }
@@ -268,9 +268,11 @@ background-color:rgba(255,255,255,70);
               <widget class="QLabel" name="label_7">
                <property name="font">
                 <font>
-                 <family>NovaFlat</family>
                  <pointsize>-1</pointsize>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>DASHBOARD</string>
@@ -315,6 +317,14 @@ background-color:rgba(255,255,255,70);
              </property>
              <item>
               <widget class="QLabel" name="label_6">
+               <property name="font">
+                <font>
+                 <pointsize>-1</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
+               </property>
                <property name="text">
                 <string>MENU</string>
                </property>
@@ -548,7 +558,6 @@ QTableView::item:selected{
            <widget class="QLabel" name="label">
             <property name="font">
              <font>
-              <family>NovaFlat</family>
               <pointsize>12</pointsize>
               <weight>99</weight>
               <bold>true</bold>
@@ -558,7 +567,8 @@ QTableView::item:selected{
              <bool>false</bool>
             </property>
             <property name="styleSheet">
-             <string notr="true">*{font-size:12pt; font-weight: 1000;}</string>
+             <string notr="true">*{font-size:12pt; font-weight: 1000;color: rgb(255, 255, 255);}
+</string>
             </property>
             <property name="text">
              <string>PY CHARTS</string>
@@ -1027,6 +1037,15 @@ QLabel{font-size:10pt;
                  <height>25</height>
                 </size>
                </property>
+               <property name="font">
+                <font>
+                 <family>MS Shell Dlg 2</family>
+                 <pointsize>10</pointsize>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
+               </property>
                <property name="text">
                 <string>f(x)=</string>
                </property>
@@ -1055,9 +1074,11 @@ QLabel{font-size:10pt;
                </property>
                <property name="font">
                 <font>
-                 <family>NovaFlat</family>
                  <pointsize>10</pointsize>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>Xmin:</string>
@@ -1116,9 +1137,12 @@ QLabel{font-size:10pt;
                </property>
                <property name="font">
                 <font>
-                 <family>NovaFlat</family>
+                 <family>MS Shell Dlg 2</family>
                  <pointsize>10</pointsize>
                 </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: rgb(255, 255, 255);</string>
                </property>
                <property name="text">
                 <string>Xmax:</string>
