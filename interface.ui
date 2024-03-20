@@ -171,15 +171,15 @@ background-color: rgba(33, 43, 51, 100);
                </property>
                <property name="styleSheet">
                 <string notr="true">QPushButton{
-	color: rgba(49, 57, 77);
-     background-color:rgba(49, 57, 77);
+	color: rgb(49, 57, 77);
+     background-color:rgb(49, 57, 77);
      border: 1px solid rgba(255,255,255,40);
      border-radius:10px;
 width: 15;
 height: 15;
 }
 QPushButton:hover{
-background-color:rgba(49, 57, 77);
+background-color:rgb(49, 57, 77);
 }
 QPushButton:pressed{
 background-color:rgba(255,255,255,70);
@@ -1014,6 +1014,9 @@ QLabel{font-size:10pt;
                  <height>16777215</height>
                 </size>
                </property>
+               <property name="text">
+                <string>-1</string>
+               </property>
               </widget>
              </item>
              <item row="0" column="0">
@@ -1068,6 +1071,9 @@ QLabel{font-size:10pt;
                  <width>40</width>
                  <height>16777215</height>
                 </size>
+               </property>
+               <property name="text">
+                <string>1</string>
                </property>
               </widget>
              </item>
