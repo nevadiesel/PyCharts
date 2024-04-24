@@ -1,4 +1,4 @@
-''# Возможности программы на данный момент:
+# Возможности программы на данный момент:
 #     1. Построение графиков:
 #         Изменение цвета, стиля линии графика
 #             1) По точкам
@@ -17,7 +17,7 @@
 #         2. Доработка цветовой палитры
 #         3. Увеличение размера, изменение шрифта
 #         4. Добавление большей закругленности элементов интерфейса
-#         5. Добавление кастомного TitleBar, 
+#         5. Добавление кастомного TitleBar,
 #             кнопок свернуть, развернуть, закрыть программу
 #         6. Фикс некоректного перебора элементов инерфейса при использовании Tab
 #     Функции:
@@ -32,10 +32,11 @@
 #     2. Добавление возможности автоматического построения производной графика функции
 #     3. Вывод в таблицу дополнительной информации по графику функции:
 #         пересечение с осями координат, точек разрыва...
-#     4. Возможность задавать свой цвет графика в формате rgb''
+#     4. Возможность задавать свой цвет графика в формате rgb
 
-import os, sys, re
-import pandas as pd
+import os
+import sys
+import re
 from Ui_interface import Ui_MainWindow
 from table import Table
 import numpy as np
@@ -47,8 +48,10 @@ from PyQt5.QtWidgets import QFileDialog, QMessageBox
 from PyQt5.QtGui import QIcon
 from PyQt5.QtSql import QSqlTableModel
 
+from plot import Function, HorizontalLine, XlsxPlot
 
-class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table):
+
+class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table, Function, HorizontalLine, XlsxPlot):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
@@ -151,27 +154,6 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table):
     def set_line_style(self, style):
         self.line_style = style
 
-    def create_db(self):
-        db = QtSql.QSqlDatabase.addDatabase('QSQLITE')
-        db.setDatabaseName('chart_db.db')
-
-        if not db.open():
-            QtWidgets.QMessageBox.critical(None, "Cannot open database",
-                                           "Click Cancel to exit.", QtWidgets.QMessageBox.Cancel)
-            return False
-
-        query = QtSql.QSqlQuery()
-        query.exec("CREATE TABLE IF NOT EXISTS charts (ID integer primary key AUTOINCREMENT, Func TEXT, Min INTEGER, "
-                   "Max INTEGER, Color TEXT, Style TEXT)")
-        return True
-
-    def open_xlsx(self):
-        options = QFileDialog.Options()
-        fileName, _ = QFileDialog.getOpenFileName(
-            self, "Open File", "", "Excel file (*.xlsx)", options=options)
-        if fileName:
-            self.table = pd.read_excel(fileName)
-
     def view_data(self):
         self.model = QSqlTableModel()
         self.model.setTable('charts')
@@ -187,40 +169,7 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table):
         # item = QTableVievItem(Func) # create the item
         # item.setTextAlignment(Qt.AlignHCenter)
 
-    def add_new_chart(self, function, x_min, x_max, color, line_style):
-        sql_query = "INSERT INTO charts (Func, Min, Max, Color, Style) VALUES (?, ?, ?, ?, ?)"
-        self.delete_query_id(
-            sql_query, [function, x_min, x_max, color, line_style])
-        self.view_data()
-
-    def delete_chart(self):
-        index = self.tableView.selectedIndexes()[0]
-        id = str(self.tableView.model().data(index))
-        self.delete_data_from_db(id)
-        self.view_data()
-        id = int(id) - 1
-        self.graphicsView.removeItem(self.lst_item[id])
-
-    def delete_data_from_db(self, id):
-        sql_query = "DELETE FROM charts WHERE ID=?"
-        self.delete_query_id(sql_query, [id])
-
-    def delete_query_id(self, sql_query, query_values=None):
-        query = QtSql.QSqlQuery()
-        query.prepare(sql_query)
-
-        if query_values is not None:
-            for query_value in query_values:
-                query.addBindValue(query_value)
-
-        query.exec()
-
-        return query
-
     def draw_fuctinon(self, function: str, x_min: int, x_max: int):
-        function = function
-        x_min = x_min
-        x_max = x_max
         x = np.linspace(x_min, x_max, int((x_max - x_min) / 0.01) + 1)
         self.symbolSize = 0.1
         try:
@@ -229,6 +178,7 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table):
                 y = func(x)
         except:
             QMessageBox.warning(self, "Ошибка", "Ошибка в вычислении функции")
+            return
 
         plot_item_func = self.graphicsView.plot(x, y, pen=pg.mkPen(
             self.color, width=2, style=self.line_style), name=function)
@@ -243,27 +193,22 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table):
         x_max = int(max(x))
         self.symbolSize = 10
         plot_item_xlsx = self.graphicsView.plot(x, y, pen=pg.mkPen(
-            self.color, width=2, style=self.line_style), symbol=self.marker, symbolBrush='black', symbolSize=self.symbolSize, name='xlsx')
+            self.color, width=2, style=self.line_style), symbol=self.marker,
+            symbolBrush='black', symbolSize=self.symbolSize, name='xlsx')
 
         self.lst_item.append(plot_item_xlsx)
         self.add_new_chart('Xlsx', x_min, x_max, self.color, self.line_style)
 
-    def draw_horizontal_line(self, function: str):
-        function = function
-        horizontal_line = pg.InfiniteLine(pos=int(
-            function), angle=0, movable=True, pen=pg.mkPen(
-            self.color, width=2, style=self.line_style), name=function)
-        self.lst_item.append(horizontal_line)
-        self.add_new_chart(function, 0, 0, self.color, self.line_style)
-        return horizontal_line
-
     def draw(self):
         if self.select_function.text():
             if re.compile(r'\d*').fullmatch(self.select_function.text()):
-                self.graphicsView.addItem(self.draw_horizontal_line(self.select_function.text()), ignoreBounds=True)
+                line = HorizontalLine(
+                    self.select_function.text(), 0, 0, self.color, self.line_style)
+                self.graphicsView.addItem(line.draw(), ignoreBounds=True)
             else:
-                self.draw_fuctinon(function=self.select_function.text(), x_min=int(
-                    self.lineEdit_2.text()), x_max=int(self.lineEdit.text()))
+                self.draw_fuctinon(function=self.select_function.text(), 
+                                   x_min=int(self.lineEdit_2.text()), 
+                                   x_max=int(self.lineEdit.text()))
         else:
             self.draw_xlsx()
 
@@ -274,13 +219,14 @@ class MainApplication(QtWidgets.QMainWindow, Ui_MainWindow, Table):
         query.exec("DELETE FROM charts")
         self.view_data()
 
-    # def save(self):
-    #     options = QFileDialog.Options()
-    #     fileName, _ = QFileDialog.getSaveFileName(
-    #         self, "Save File", "", "SVG Files (*.svg)", options=options)
-    #     if fileName:
-    #         exporter = pyqtgraph.exporters.SVGExporter(self.graphicsView.plotItem)
-    #         exporter.export(fileName+'.svg')
+    def save(self):
+        options = QFileDialog.Options()
+        fileName, _ = QFileDialog.getSaveFileName(
+            self, "Save File", "", "SVG Files (*.svg)", options=options)
+        if fileName:
+            exporter = pyqtgraph.exporters.SVGExporter(
+                self.graphicsView.plotItem)
+            exporter.export(fileName+'.svg')
 
     def before_close(self):
         query = QtSql.QSqlQuery()
